@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Creating multiple EC2 instances with shared instance type
+
+Parameters:
+  InstanceTypeA:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+
+  InstanceTypeB:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+  Bucket1Name:
+    Type: String
+    Default: foresters-demo-kk
+
+
+Resources:
+  EC2InstanceA:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0cd582ee8a22cc7be
+      InstanceType: !Ref InstanceTypeA
+      Tags:
+        - Key: Name
+          Value: EC2-A
+
+  EC2InstanceB:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0cd582ee8a22cc7be
+      InstanceType: !Ref InstanceTypeB
+      Tags:
+        - Key: Name
+          Value: EC2-B
+  KishorS3bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref Bucket1Name
+
